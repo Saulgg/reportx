@@ -16,20 +16,23 @@ export default {
   props: {
     msg: String
   },
-  data: function(){
+  data () {
     return {
       messages: []
     }
   },
-  mounted : function () {
+  mounted () {
     this.getMessages()
   },
   methods : {
-    getMessages(){
-      api.getMessages().on('child_added', snapshot => {
+
+    getMessages() {
+      api.db('messages').on('child_added', snapshot => {
         this.messages.push(snapshot.val())
       })
     }
+
+
   }
 };
 </script>
