@@ -17,11 +17,9 @@ api.db = function (reference) {
     return database.ref(reference);
 }
 
-api.registerWithEmail = function (email,password){
-    return auth.createUserWithEmailAndPassword(email,password);
-}
 api.auth = function (){
     return firebase.auth()
 }
 
+api.googleauth = firebase.auth
 export default api;

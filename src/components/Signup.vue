@@ -1,18 +1,6 @@
 <template>
     <div class="container">
-        <div  v-if="authUser">
-            <div class="row">
-                <div class="col-md">
-                    <h2>Sesión iniciada como {{ authUser.email }}</h2>         
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md">
-                    <button @click="signOut" class="btn btn-primary">Sign out</button>
-                </div>
-            </div>
-        </div>
-        <div v-else>
+        <div>
             <div class="row">
                 <div class="col-md">
                     <h1>ReportX</h1>
@@ -27,14 +15,13 @@
                     </div>
                     <div class="row">
                         <dir class="col-md">
+                            <button @click="signInWithGoogle" class="btn btn-primary">Registrarme con Google</button>
                             <form @submit.prevent="register" class="form-action">
-                                <input type="submit" value="Registrarme usando Google" class="btn btn-primary">
+                                
                                 <div>o</div>
                                 <div>Regístrate usando correo:</div>
-                                <input type="text" class="form-control" placeholder="Nombre completo" >
                                 <input type="text" class="form-control" v-model="email" placeholder="Correo" required>
                                 <input type="password" class="form-control" v-model="password" placeholder="Contraseña" required>
-                                <input type="text" class="form-control" placeholder="Confirmar contraseña">
                                 <input type="submit" value="Regístrate" class="btn btn-primary">
                             </form>
                         </dir>
@@ -44,8 +31,8 @@
             <!-- <div class="row"> -->
                 <div class="col-md">
                     <h3>Iniciar sesión</h3>
+                    <button @click="signInWithGoogle" class="btn btn-primary">Iniciar sesión con Google</button>
                     <form @submit.prevent="signIn" class="form-action">
-                        <input type="submit" value="Iniciar sesión usando Google" class="btn btn-primary">
                         <div>Iniciar sesión:</div>
                         <input type="text" class="form-control" v-model="email" placeholder="Correo" required>
                         <input type="password" class="form-control" v-model="password" placeholder="Contraseña" required>
@@ -66,24 +53,44 @@ export default {
     return {
       email: "",
       password: "",
+      displayName: null,
+      photoURL: null,
       authUser: null
     };
   },
   mounted: function() {},
   methods: {
     register() {
-        api.auth().createUserWithEmailAndPassword(this.email, this.password);
+        api.auth().createUserWithEmailAndPassword(this.email, this.password)
+        .then(data =>  this.$router.go())
+        .catch(error => alert(error.message));
     },
     signIn() {
-        api.auth().signInWithEmailAndPassword(this.email,this.password);
+        api.auth().signInWithEmailAndPassword(this.email,this.password).catch(error => alert(error.message));
     },
     signOut() {
         api.auth().signOut();
+    },
+    signInWithGoogle() {
+        const provider = new api.googleauth.GoogleAuthProvider()
+        api.auth().signInWithPopup(provider)
+        .then(data =>  this.$router.go())
+        .catch(error => alert(error.message))
+    },
+    updateProfile() {
+        this.authUser.updateProfile({
+            displayName: this.displayName,
+            photoURL: this.photoURL
+        })
     }
   },
   created() {
     api.auth().onAuthStateChanged(user => {
       this.authUser = user;
+      if (user) {
+          this.displayName = user.displayName;
+          this.photoURL = user.photoURL;
+      }
     });
   }
 };
