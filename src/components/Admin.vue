@@ -1,30 +1,40 @@
 <template>
     <div class="container">
-        <div  v-if="authUser">
-            <div class="row">
-                <div class="col-md">
-                    <h2>Sesión iniciada como {{ authUser.email }}</h2>         
-                </div>
+        <div v-if="loading">
+            <div class="loading">
+                <h3>Cargando...</h3>
             </div>
-            <div class="row">
+        </div>
+        <div  v-else>
+            <div class="row" v-if="!proyect" >
                 <div class="col-md">
-                    <img :src="authUser.photoURL" alt="" height="150">
-                    <p>{{authUser.displayName || authUser.email}}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md">
-                    <button @click="signOut" class="btn btn-primary">Cerrar sesión</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md">
-                    <form @submit.prevent="updateProfile">
-                        <h2>Actualizar perfil</h2>
-                        <input v-model="displayName" placeholder="Tú nombre">
-                        <input v-model="photoURL" placeholder="URL de tú foto">
-                        <button>Actualizar</button>
+                    <h2>Bienvenido a Reportx {{ authUser.displayName }}</h2>
+                    <p>Primero ¿Cuál es el nombre de tú organización?</p>
+                    <form @submit.prevent="createProyect" class="form-action">
+                        <input type="text" class="form-control" v-model="proyectName"  placeholder="Organización fulana de tal" required>
+                        <input type="submit" value="Guardar y continuar" class="btn btn-primary">
                     </form>
+                </div>
+            </div>
+            <div class="row" v-else >
+                <div class="col-md">
+                    <div class="row">
+                        <div class="col-md">
+                            <h1>{{proyect.name}}</h1>
+                    
+                                
+
+                        </div>
+                    </div>
+                    <router-link class="flexin" to="">Reportes</router-link>
+                    <router-link class="flexin" to="">Administrar usuarios</router-link>
+                    <router-link class="flexin" to="">Administrar instalaciones</router-link>
+                    <router-link class="flexin" to="">Configuración de la organización</router-link>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <p><a href="#" @click="signOut">Cerrar Sesión</a></p>
                 </div>
             </div>
         </div>
@@ -38,44 +48,45 @@ export default {
   name: "Admin",
   data() {
     return {
-      email: "",
-      password: "",
-      displayName: null,
-      photoURL: null,
-      authUser: null
+        loading: true,
+        email: "",
+        password: "",
+        displayName: null,
+        userUID: null,
+        photoURL: null,
+        authUser: null,
+        proyect: null,
+        proyectName: ''
+      
     };
   },
   mounted: function() {},
   methods: {
-    register() {
-        api.auth().createUserWithEmailAndPassword(this.email, this.password).catch(error => alert(error.message));
-    },
-    signIn() {
-        api.auth().signInWithEmailAndPassword(this.email,this.password).catch(error => alert(error.message));
-    },
     signOut() {
         api.auth().signOut();
         this.$router.go()
     },
-    signInWithGoogle() {
-        const provider = new api.googleauth.GoogleAuthProvider()
-        api.auth().signInWithPopup(provider)
-        .then(data => console.log(data.user, data.credential.accessToken))
-        .catch(error => alert(error.message))
-    },
-    updateProfile() {
-        this.authUser.updateProfile({
-            displayName: this.displayName,
-            photoURL: this.photoURL
-        })
+    createProyect() {
+        api.db('proyects').child(this.authUser.uid).push({name: this.proyectName}).then(this.$router.go())
     }
   },
   created() {
     api.auth().onAuthStateChanged(user => {
       this.authUser = user;
       if (user) {
-          this.displayName = user.displayName;
-          this.photoURL = user.photoURL;
+            this.displayName = user.displayName;
+            this.photoURL = user.photoURL;
+            api.db('proyects').child(user.uid).once('value', snapshot => {
+                this.loading=false;
+                if (snapshot.val()){
+                    for (let key in snapshot.val()){
+                        this.proyect = snapshot.val()[key]
+                        console.log(snapshot.val()[key])
+                    }
+                    
+                    
+                }
+            })
       }
     });
   }
@@ -83,6 +94,7 @@ export default {
 </script>
 
 <style scoped>
+
 h3 {
   margin: 40px 0 0;
 }
