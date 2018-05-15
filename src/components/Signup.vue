@@ -10,34 +10,38 @@
                 <div class="col-md">
                     <div class="row">
                         <div class="col-md">
-                            <h2>Únirme ahora a ReportX</h2>
+                            
                         </div>
                     </div>
                     <div class="row">
                         <dir class="col-md">
-                            <button @click="signInWithGoogle" class="btn btn-primary">Registrarme con Google</button>
+                            <h2>Únirme ahora a ReportX</h2>
                             <form @submit.prevent="register" class="form-action">
                                 
-                                <div>o</div>
+                               
                                 <div>Regístrate usando correo:</div>
                                 <input type="text" class="form-control" v-model="email" placeholder="Correo" required>
                                 <input type="password" class="form-control" v-model="password" placeholder="Contraseña" required>
                                 <input type="submit" value="Regístrate" class="btn btn-primary">
+                                 <div>ó</div>
                             </form>
+                            <button @click="signInWithGoogle" class="btn btn-primary">Registrarme con Google</button>
+
                         </dir>
                     </div>
                 </div>
             <!-- </div> -->
             <!-- <div class="row"> -->
                 <div class="col-md">
-                    <h3>Iniciar sesión</h3>
-                    <button @click="signInWithGoogle" class="btn btn-primary">Iniciar sesión con Google</button>
+                    <h3>¿Ya tienes cuenta?</h3>
                     <form @submit.prevent="signIn" class="form-action">
-                        <div>Iniciar sesión:</div>
+                        <div>Iniciar sesión con correo:</div>
                         <input type="text" class="form-control" v-model="email" placeholder="Correo" required>
                         <input type="password" class="form-control" v-model="password" placeholder="Contraseña" required>
                         <input type="submit" value="Iniciar sesión" class="btn btn-primary">
+                        <div>ó</div>
                     </form>
+                     <button @click="signInWithGoogle" class="btn btn-primary">Iniciar sesión con Google</button>
                 </div>
             </div>
         </div>
@@ -56,7 +60,7 @@ export default {
       displayName: null,
       photoURL: null,
       authUser: null
-    };
+    }
   },
   mounted: function() {},
   methods: {

@@ -26,26 +26,18 @@
 
                         </div>
                     </div>
-                    <router-link class="badge badge-success" to="">Reportes</router-link>
+                    <router-link class="flexin" to="/">Reportes</router-link>
                     <router-link class="flexin" to="/usuarios">Administrar usuarios</router-link>
-                    <router-link class="flexin" to="/instalaciones">Administrar instalaciones</router-link>
+                    <router-link class="badge badge-success" to="">Administrar instalaciones</router-link>
                     <router-link class="flexin" to="">Configuración de la organización</router-link>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md">
-                    <router-link class="badge badge-primary" to="">Prioridad Inmediata</router-link>
-                    <router-link class="flexin" to="">Prioridad Alta</router-link>
-                    <router-link class="flexin" to="">Prioridad Media</router-link>
-                    <router-link class="flexin" to="">Prioridad Baja</router-link>
+                    
                 </div>
             </div>
-            <div class="row" v-if="!ticketCheck">
-                <div class="col-md">
-                    <h3>¡Vaya! Parece que no hay tickets...</h3>
-                    <p>Sí es la primera vez que entras recuerda agregar usuarios al proyecto en la pestaña de administrar usuarios.</p>
-                </div>
-            </div>
+
             <div class="row">
                 <div class="col-md">
                     <p><a href="#" class="btn btn-outline-danger" @click="signOut">Cerrar Sesión</a></p>
@@ -59,33 +51,19 @@
 <script>
 import api from "../api";
 export default {
-  name: "Admin",
+  name: "Base",
   data() {
     return {
       loadingPage: true,
-      ticketCheck: false,
-      email: "",
-      password: "",
-      displayName: null,
-      userUID: null,
-      photoURL: null,
       authUser: null,
       proyect: null,
-      proyectName: ""
+      proyectName: "",
     };
   },
-  mounted: function() {},
   methods: {
     signOut() {
       api.auth().signOut();
       this.$router.go();
-    },
-    createProyect() {
-      api
-        .db("proyects")
-        .child(this.authUser.uid)
-        .push({ name: this.proyectName })
-        .then(this.$router.go());
     }
   },
   created() {
@@ -103,7 +81,6 @@ export default {
               for (let key in snapshot.val()) {
                 if (!this.proyect) {
                   this.proyect = snapshot.val()[key];
-                  this.proyectKey = key;
                 }
               }
             }

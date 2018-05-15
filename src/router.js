@@ -4,6 +4,8 @@ import Home from "./views/Home.vue";
 import About from "./views/About.vue";
 import Signup from "./components/Signup.vue";
 import Admin from "./components/Admin.vue";
+import Users from "./components/Users.vue";
+import Base from "./components/Base.vue";
 import api from "./api"
 Vue.use(Router);
 
@@ -27,6 +29,22 @@ let router = new Router({
       path: "/signup",
       name: "Signup",
       component: Signup
+    },
+    {
+      path: "/usuarios",
+      name: "Users",
+      component: Users,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/instalaciones",
+      name: "Base",
+      component: Base,
+      meta: {
+        requiresAuth: true
+      }
     },
   ]
 });
