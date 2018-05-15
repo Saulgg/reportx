@@ -6,6 +6,7 @@ import Signup from "./components/Signup.vue";
 import Admin from "./components/Admin.vue";
 import Users from "./components/Users.vue";
 import Base from "./components/Base.vue";
+import createTicket from "./components/createTicket.vue";
 import api from "./api"
 Vue.use(Router);
 
@@ -42,6 +43,14 @@ let router = new Router({
       path: "/instalaciones",
       name: "Base",
       component: Base,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/ticket",
+      name: "ticket",
+      component: createTicket,
       meta: {
         requiresAuth: true
       }

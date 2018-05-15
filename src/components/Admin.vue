@@ -46,6 +46,23 @@
                     <p>Sí es la primera vez que entras recuerda agregar usuarios al proyecto en la pestaña de administrar usuarios.</p>
                 </div>
             </div>
+            <div class="row" v-else v-for="ticket in tickets" :key="ticket.key">
+                <div class="col-md">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h3><div class="card-title">Ticket de: {{ticket.name}}</div></h3><hr>
+                            </div>
+                           <div class="card-text">
+                               <p>Mensaje: {{ticket.message}}</p>
+                               <p>Lugar: {{ticket.building}}-{{ticket.room}}</p>
+                               <p class="alert alert-warning">Estado: {{ticket.working}}</p>
+                               <p class="alert alert-danger">Prioridad: {{ticket.priority}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md">
                     <p><a href="#" class="btn btn-outline-danger" @click="signOut">Cerrar Sesión</a></p>
@@ -71,7 +88,8 @@ export default {
       photoURL: null,
       authUser: null,
       proyect: null,
-      proyectName: ""
+      proyectName: "",
+      tickets: []
     };
   },
   mounted: function() {},
@@ -94,6 +112,15 @@ export default {
       if (user) {
         this.displayName = user.displayName;
         this.photoURL = user.photoURL;
+        api.db("proyects")
+        .child(`${user.uid}/tickets/`)
+        .on("child_added", snapshot=> {
+            this.tickets.push(snapshot.val());
+            if(snapshot.val()){
+                this.ticketCheck = true
+            }
+            
+        })
         api
           .db("proyects")
           .child(user.uid)
