@@ -2,6 +2,7 @@
     <div class="container">
         <div v-if="loadingPage">
             <div class="loadingPage">
+                <br>
                 <h3>Cargando...</h3>
             </div>
         </div>
@@ -20,6 +21,7 @@
                 <div class="col-md">
                     <div class="row">
                         <div class="col-md">
+                            <br>
                             <h1>{{proyect.name}}</h1>
                     
                                 
@@ -29,11 +31,12 @@
                     <router-link class="flexin" to="/">Reportes</router-link>
                     <router-link class="badge badge-success" to="">Administrar usuarios</router-link>
                     <router-link class="flexin" to="/instalaciones">Administrar instalaciones</router-link>
-                    <router-link class="flexin" to="">Configuración de la organización</router-link>
+                    <!-- <router-link class="flexin" to="">Configuración de la organización</router-link> -->
                 </div>
             </div>
             <div class="row">
                 <div class="col-md">
+                    <br>
                     <h2>Añadir usuario</h2>
                     <form @submit.prevent="addUser" class="form-action">
                         <div class="form-row">
@@ -105,6 +108,9 @@ export default {
         .db("proyects")
         .child(`/${this.authUser.uid}/users/`)
         .push({ email: this.userEmail });
+         api
+        .db("users")
+        .push({ email: this.userEmail, projectID: this.authUser.uid });
       this.userEmail = "";
       this.$refs.email.focus();
     },

@@ -2,12 +2,14 @@
     <div class="container">
         <div v-if="loadingPage">
             <div class="loadingPage">
+                <br>
                 <h3>Cargando...</h3>
             </div>
         </div>
         <div  v-else>
             <div class="row" v-if="!proyect" >
                 <div class="col-md">
+                    <br>
                     <h2>Bienvenido a Reportx {{ authUser.displayName || authUser.email }}</h2>
                     <p>Primero ¿Cuál es el nombre de tú organización?</p>
                     <form @submit.prevent="createProyect" class="form-action">
@@ -20,6 +22,7 @@
                 <div class="col-md">
                     <div class="row">
                         <div class="col-md">
+                            <br>
                             <h1>{{proyect.name}}</h1>
                     
                                 
@@ -29,25 +32,27 @@
                     <router-link class="badge badge-success" to="">Reportes</router-link>
                     <router-link class="flexin" to="/usuarios">Administrar usuarios</router-link>
                     <router-link class="flexin" to="/instalaciones">Administrar instalaciones</router-link>
-                    <router-link class="flexin" to="">Configuración de la organización</router-link>
+                    <!-- <router-link class="flexin" to="">Configuración de la organización</router-link> -->
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md">
                     <router-link class="badge badge-primary" to="">Prioridad Inmediata</router-link>
                     <router-link class="flexin" to="">Prioridad Alta</router-link>
                     <router-link class="flexin" to="">Prioridad Media</router-link>
                     <router-link class="flexin" to="">Prioridad Baja</router-link>
                 </div>
-            </div>
-            <div class="row" v-if="!ticketCheck">
+            </div> -->
+            <div class="row" v-if="!ticketCheck&&proyect">
                 <div class="col-md">
+                    <br>
                     <h3>¡Vaya! Parece que no hay tickets...</h3>
                     <p>Sí es la primera vez que entras recuerda agregar usuarios al proyecto en la pestaña de administrar usuarios.</p>
                 </div>
             </div>
             <div class="row" v-else v-for="ticket in tickets" :key="ticket.key">
                 <div class="col-md">
+                    <br>
                     <div class="card">
                         <div class="card-body">
                             <div class="card-title">

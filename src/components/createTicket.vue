@@ -2,6 +2,7 @@
     <div class="container">
         <div v-if="loadingPage">
             <div class="loadingPage">
+                <br>
                 <h3>Cargando...</h3>
             </div>
         </div>

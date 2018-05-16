@@ -3,6 +3,7 @@
         <div>
             <div class="row">
                 <div class="col-md">
+                    <br>
                     <h1>ReportX</h1>
                 </div>
             </div>
@@ -22,10 +23,11 @@
                                 <div>Regístrate usando correo:</div>
                                 <input type="text" class="form-control" v-model="email" placeholder="Correo" required>
                                 <input type="password" class="form-control" v-model="password" placeholder="Contraseña" required>
-                                <input type="submit" value="Regístrate" class="btn btn-primary">
+                                <br>
+                                <input type="submit" value="Regístrate" class="btn btn-outline-primary">
                                  <div>ó</div>
                             </form>
-                            <button @click="signInWithGoogle" class="btn btn-primary">Registrarme con Google</button>
+                            <button @click="signInWithGoogle" class="btn btn-outline-primary">Registrarme con Google</button>
 
                         </dir>
                     </div>
@@ -38,10 +40,11 @@
                         <div>Iniciar sesión con correo:</div>
                         <input type="text" class="form-control" v-model="email" placeholder="Correo" required>
                         <input type="password" class="form-control" v-model="password" placeholder="Contraseña" required>
-                        <input type="submit" value="Iniciar sesión" class="btn btn-primary">
+                        <br>
+                        <input type="submit" value="Iniciar sesión" class="btn btn-outline-primary">
                         <div>ó</div>
                     </form>
-                     <button @click="signInWithGoogle" class="btn btn-primary">Iniciar sesión con Google</button>
+                     <button @click="signInWithGoogle" class="btn btn-outline-primary">Iniciar sesión con Google</button>
                 </div>
             </div>
         </div>

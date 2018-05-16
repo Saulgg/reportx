@@ -2,6 +2,7 @@
     <div class="container">
         <div v-if="loadingPage">
             <div class="loadingPage">
+                <br>
                 <h3>Cargando...</h3>
             </div>
         </div>
@@ -20,6 +21,7 @@
                 <div class="col-md">
                     <div class="row">
                         <div class="col-md">
+                            <br>
                             <h1>{{proyect.name}}</h1>
                     
                                 
@@ -29,12 +31,13 @@
                     <router-link class="flexin" to="/">Reportes</router-link>
                     <router-link class="flexin" to="/usuarios">Administrar usuarios</router-link>
                     <router-link class="badge badge-success" to="">Administrar instalaciones</router-link>
-                    <router-link class="flexin" to="">Configuración de la organización</router-link>
+                    <!-- <router-link class="flexin" to="">Configuración de la organización</router-link> -->
                 </div>
             </div>
             <div class="row">
                 <div class="col-md">
-                    <h2>Instalaciones</h2>
+                    <br>
+                    <h2>Añadir Edificio</h2>
                 </div>
             </div>
             <div class="row">
@@ -42,7 +45,7 @@
                     <form @submit.prevent="addBuilding" class="form-action">
                         <div class="form-row">
                             <div class="col-md-11">
-                                <input type="text" class="form-control" ref="building" v-model="buildingName" placeholder="Nombre" required>
+                                <input type="text" class="form-control" ref="building" v-model="buildingName" placeholder="Nombre del Edificio" required>
                             </div>
                              <div class="col-md-1">
                                 <input type="submit" value="Añadir" class="btn btn-primary">
@@ -53,8 +56,7 @@
                     
                 </div>
             </div>
-            <br>
-            <h2>Edificios</h2>
+
             <hr>
             <div class="row" v-for="building in buildings" :key="building.key">
                 <div class="col-md">
@@ -66,7 +68,7 @@
                             <form @submit.prevent="addRoom(building.id,form.parent_id[building.id])" class="form-action">
                                 <div class="form-row">
                                     <div class="col-md-11">
-                                        <input type="text" class="form-control" v-model="form.parent_id[building.id]" placeholder="Área" required>
+                                        <input type="text" class="form-control" v-model="form.parent_id[building.id]" placeholder="Lugar/Salón" required>
 
                                     </div>
                                     <div class="col-md-1">
@@ -81,7 +83,7 @@
                                     
                                     <div class="col-md">
                                   <br>
-                                        <h4>Área</h4>
+                                        <h4>Lugar/Salón</h4>
                                     </div>
                                     
                                 </div>
